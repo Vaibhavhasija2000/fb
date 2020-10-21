@@ -1,25 +1,34 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import Header from '../components/Header/Header';
+import classes from './App.css';
+import Sidebar from '../components/Sidebar/Sidebar';
+import Feed from '../components/Feed/Feed';
+import Widgets from '../components/Widgets/Widgets';
+import Login from '../components/Login/Login';
+import {useStateValue} from '../components/StateProvider';
+function App() {
+  const [{ user },dispatch] = useStateValue();
+  return( 
+    <div className={classes.app}>
+      
+        {!user ?
+        (
+        <h1><Login /></h1>
+        ) : (
+          <div>
+          <Header />
+          <div className={classes.app__body}>
+          <Sidebar />
+          <Feed />
+          <Widgets />
+         </div>
+         </div>
+        )}
+       
 
-import Layout from '../Layout/Layout';
-import BurgerBuilder from './BurgerBuilder/BurgerBuilder';
-import Checkout from './Checkout/Checkout';
-import Orders from './Checkout/Orders/Orders';
-
-class App extends Component {
-  render () {
-    return (
-      <div>
-        <Layout>
-          <Switch>
-            <Route path="/checkout" component={Checkout} />
-            <Route path="/orders" component={Orders} />
-            <Route path="/" exact component={BurgerBuilder} />
-          </Switch>
-        </Layout>
-      </div>
-    );
-  }
+      
+    </div>
+  );
 }
 
 export default App;
